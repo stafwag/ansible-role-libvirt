@@ -1,0 +1,10 @@
+---
+- name: Install libvirt packages
+  pacman:
+    name: 
+      - libvirt
+      - bridge-utils
+      - openbsd-netcat
+    state: present
+  notify:
+    - reload libvirtd

@@ -1,0 +1,10 @@
+---
+- name: Install libvirt packages
+  dnf:
+    name: 
+      - libvirt
+      - qemu-kvm
+      - bridge-utils
+    state: present
+  notify:
+    - reload libvirtd

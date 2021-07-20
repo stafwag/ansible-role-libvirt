@@ -1,0 +1,7 @@
+---
+- name: Install the libvirt related packages
+  zypper:
+    name:
+      - patterns-openSUSE-kvm_server
+      - patterns-server-kvm_tools
+    state: present

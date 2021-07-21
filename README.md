@@ -5,7 +5,7 @@ service.
 
 ## Requirements
 
-### Supported platforms
+### Supported GNU/Linux Distributions
 
 * Archlinux
 * Debian
@@ -14,6 +14,7 @@ service.
 * RedHat
 * Rocky
 * Suse
+* Ubuntu
 
 ## Example Playbooks
 

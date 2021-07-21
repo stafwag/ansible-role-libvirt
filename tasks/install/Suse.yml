@@ -2,6 +2,9 @@
 - name: Install the libvirt related packages
   zypper:
     name:
+      - libvirt
+      - qemu-kvm
       - patterns-openSUSE-kvm_server
-      - patterns-server-kvm_tools
     state: present
+  notify:
+    - reload libvirtd

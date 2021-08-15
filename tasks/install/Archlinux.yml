@@ -3,8 +3,12 @@
   pacman:
     name: 
       - libvirt
+      - qemu
+      - ebtables
+      - dnsmasq
       - bridge-utils
       - openbsd-netcat
+      - dmidecode
     state: present
   notify:
     - reload libvirtd

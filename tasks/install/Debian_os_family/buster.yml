@@ -1,0 +1,10 @@
+- name: Install the libvirt packages
+  apt:
+    pkg:
+      - qemu-system
+      - qemu-kvm
+      - libvirt-clients
+      - libvirt-daemon-system
+      - bridge-utils
+  notify:
+    - reload libvirtd

@@ -1,6 +1,6 @@
 # Ansible Role: libvirt
 
-An ansible role to to install libvirt/KVM packages and enable the libvirtd
+An ansible role to install libvirt/KVM packages and enable the libvirtd
 service.
 
 ## Requirements

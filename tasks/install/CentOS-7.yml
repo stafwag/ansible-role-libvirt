@@ -1,7 +1,0 @@
----
-- name: Install the 'Virtualization Host' environment group
-  yum:
-    name: "@^Virtualization Host"
-    state: present
-  notify:
-    - reload libvirtd

@@ -8,6 +8,7 @@ service.
 ### Supported GNU/Linux Distributions
 
 * Archlinux
+* AlmaLinux
 * Debian
 * Centos
 * Fedora

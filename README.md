@@ -27,7 +27,7 @@ service.
     required packages and start/enable the required service with ```tasks_from``` in the ```include_role```,
     ```import_role```, … ansible modules.
 
-    See exmaple below.
+    See example below.
 
 ## Example Playbooks
 

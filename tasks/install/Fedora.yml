@@ -1,0 +1,7 @@
+---
+- name: Install the 'virtualization' group
+  dnf:
+    name: "@virtualization"
+    state: present
+  notify:
+    - reload libvirtd

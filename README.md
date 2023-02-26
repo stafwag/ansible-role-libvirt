@@ -17,6 +17,18 @@ service.
 * Suse
 * Ubuntu
 
+## Role tasks, variables and templates
+
+### Tasks
+
+* **install**
+
+    All installation-related tasks are defined in the ```install``` playbook. This allows you to install the
+    required packages and start/enable the required service with ```tasks_from``` in the ```include_role```,
+    ```import_role```, … ansible modules.
+
+    See exmaple below.
+
 ## Example Playbooks
 
 ### Install libvirt packages
@@ -28,6 +40,24 @@ service.
   hosts: kvm_hosts
   roles:
     - role: stafwag.libvirt
+```
+
+### Install libvirt packages with include_role
+
+```
+---
+- name: Install libvirt 
+  gather_facts: true 
+  hosts: all
+  become: true
+  tasks:
+    - name: Install the requirements
+      include_role:
+        name: "{{ item }}"
+        tasks_from:
+          install
+      with_items:
+        - stafwag.libvirt
 ```
 
 ## License

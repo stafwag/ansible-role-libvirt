@@ -10,6 +10,8 @@
     - 'install/defaults.yml'
   loop_control:
     loop_var: install
+  tags:
+    - install
   when:
     - ansible_distribution is defined
     - ansible_os_family is defined
@@ -20,3 +22,5 @@
     name: libvirtd
     state: started
     enabled: yes
+  tags:
+    - install

@@ -29,6 +29,13 @@ service.
 
     See example below.
 
+### Tags
+
+* **install**
+
+  Install the required packages.
+
+
 ## Example Playbooks
 
 ### Install libvirt packages

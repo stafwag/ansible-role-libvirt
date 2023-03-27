@@ -1,6 +1,18 @@
 ---
+# Ensure gnu-netcat in not installed
+# Nothing wrong with gnu-netcat1 but the ArchLinux wiki seems to recommend openbsd-net
+# https://wiki.archlinux.org/title/libvirt#Configuration
+# removing gnu-netcat so openbsd-netcat can get installed
+- name: Ensure gnu-netcat in not installed
+  pacman:
+    name:
+      - gnu-netcat
+    state:
+      absent
 - name: Install libvirt packages
   pacman:
+    name:
+      - gnu-netcat
     name: 
       - libvirt
       - qemu-full

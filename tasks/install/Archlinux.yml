@@ -9,6 +9,7 @@
       - gnu-netcat
     state:
       absent
+
 - name: Install libvirt packages
   pacman:
     name:

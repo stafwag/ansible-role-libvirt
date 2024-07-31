@@ -1,5 +1,5 @@
 ---
 - name: Not supported
-  debug:
+  ansible.builtin.debug:
     msg:
-      - "Your GNU/Linux distribution or version isn't supported (yet)."
+      - Your GNU/Linux distribution or version isn't supported (yet).

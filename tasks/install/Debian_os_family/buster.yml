@@ -1,5 +1,6 @@
+---
 - name: Install the libvirt packages
-  apt:
+  ansible.builtin.apt:
     pkg:
       - qemu-system
       - qemu-kvm
@@ -7,4 +8,4 @@
       - libvirt-daemon-system
       - bridge-utils
   notify:
-    - reload libvirtd
+    - Reload libvirtd

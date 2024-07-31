@@ -1,39 +1,44 @@
 ---
 - name: Check if /etc/debian_version exists
-  stat:
+  ansible.builtin.stat:
     path: /etc/debian_version
   register: stat_etc_debian_version
 
 - name: Map debian version to debian_codename
+  when:
+    - stat_etc_debian_version.stat.exists
   block:
     - name: Get the debian code name
-      shell: cat /etc/debian_version | head -1 | cut -f 1 -d '/'
+      ansible.builtin.shell: |
+        set -o errexit
+        set -o pipefail
+        set -o nounset
+
+        cat /etc/debian_version | head -1 | cut -f 1 -d '/'
       register: shell_get_debian_codename
-      changed_when:  false
+      changed_when: false
     - name: Display shell_get_debian_codename
-      debug:
+      ansible.builtin.debug:
         msg:
           - "{{ shell_get_debian_codename }}"
       tags:
         - never
         - debug
     - name: Set debian_codename
-      set_fact:
+      ansible.builtin.set_fact:
         debian_codename: "{{ shell_get_debian_codename.stdout_lines[0] }}"
     - name: Display debian_codename
-      debug:
+      ansible.builtin.debug:
         msg:
           - "{{ debian_codename }}"
       tags:
         - never
         - debug
-  when:
-    - stat_etc_debian_version.stat.exists
 
 - name: Install the required Debian packages
-  include_tasks: '{{ install_debian }}'
+  ansible.builtin.include_tasks: "{{ install_debian }}"
   with_first_found:
-    - 'Debian_os_family/{{ debian_codename }}.yml'
-    - 'Debian_os_family/defaults.yml'
+    - Debian_os_family/{{ debian_codename }}.yml
+    - Debian_os_family/defaults.yml
   loop_control:
     loop_var: install_debian

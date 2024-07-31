@@ -4,24 +4,19 @@
 # https://wiki.archlinux.org/title/libvirt#Configuration
 # removing gnu-netcat so openbsd-netcat can get installed
 - name: Ensure gnu-netcat in not installed
-  pacman:
+  community.general.pacman:
     name:
       - gnu-netcat
-    state:
-      absent
-
+    state: absent
 - name: Install libvirt packages
-  pacman:
+  community.general.pacman:
     name:
-      - gnu-netcat
-    name: 
       - libvirt
       - qemu-full
       - dnsmasq
       - bridge-utils
       - openbsd-netcat
       - dmidecode
-    state:
-      present
+    state: present
   notify:
-    - reload libvirtd
+    - Reload libvirtd

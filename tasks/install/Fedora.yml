@@ -1,7 +1,7 @@
 ---
 - name: Install the 'virtualization' group
-  dnf:
+  ansible.builtin.dnf:
     name: "@virtualization"
     state: present
   notify:
-    - reload libvirtd
+    - Reload libvirtd

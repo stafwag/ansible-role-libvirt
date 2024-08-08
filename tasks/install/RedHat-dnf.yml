@@ -4,4 +4,4 @@
     name: "@Virtualization Host"
     state: present
   notify:
-    - reload libvirtd
+    - Reload libvirtd

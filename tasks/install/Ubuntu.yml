@@ -4,6 +4,16 @@
     path: /etc/debian_version
   register: stat_etc_debian_version
 
+# On Ubuntu the default shell is dash
+# dash doesn't support pipefail.
+#
+# Ensure that bash is installed, and use bash as the shell executable
+
+- name: Ensure bash is installed
+  ansible.builtin.package:
+    name: bash
+    state: present
+
 - name: Map debian version to debian_codename
   when:
     - stat_etc_debian_version.stat.exists
@@ -15,6 +25,9 @@
         set -o nounset
 
         cat /etc/debian_version | head -1 | cut -f 1 -d '/'
+      args:
+        executable:
+          bash
       register: shell_get_debian_codename
       changed_when: false
     - name: Display shell_get_debian_codename

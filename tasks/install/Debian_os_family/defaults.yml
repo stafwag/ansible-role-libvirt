@@ -1,7 +1,8 @@
 ---
 - name: Install the libvirt packages
-  ansible.builtin.apt:
-    pkg:
+  become: true
+  ansible.builtin.package:
+    name:
       - qemu-system
       - libvirt-clients
       - libvirt-daemon-system

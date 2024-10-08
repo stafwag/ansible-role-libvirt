@@ -2,6 +2,7 @@
 # handlers file for libvirt
 
 - name: Reload libvirtd
+  become: true
   ansible.builtin.service:
     name: libvirtd
     state: reloaded

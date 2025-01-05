@@ -65,10 +65,11 @@ and put it into the [role search path](https://docs.ansible.com/ansible/2.4/play
 ### Install libvirt packages
  
 ```
-- name: Install libvirt 
-  gather_facts: true 
+---
+- name: Install libvirt
+  gather_facts: true
   become: true
-  hosts: kvm_hosts
+  hosts: localhost
   roles:
     - role: stafwag.libvirt
 ```
@@ -77,18 +78,20 @@ and put it into the [role search path](https://docs.ansible.com/ansible/2.4/play
 
 ```
 ---
-- name: Install libvirt 
-  gather_facts: true 
-  hosts: all
+- name: Install libvirt
+  gather_facts: true
+  hosts: localhost
   become: true
   tasks:
     - name: Install the requirements
-      include_role:
-        name: "{{ item }}"
+      ansible.builtin.include_role:
+        name: "{{ _role }}"
         tasks_from:
           install
       with_items:
         - stafwag.libvirt
+      loop_control:
+        loop_var: _role
 ```
 
 ## License

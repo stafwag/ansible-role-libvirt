@@ -1,0 +1,15 @@
+---
+- name: Install libvirt
+  gather_facts: true
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Install the requirements
+      ansible.builtin.include_role:
+        name: "{{ _role }}"
+        tasks_from:
+          install
+      with_items:
+        - stafwag.libvirt
+      loop_control:
+        loop_var: _role

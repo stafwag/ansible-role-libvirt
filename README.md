@@ -9,13 +9,37 @@ service.
 
 * Archlinux
 * AlmaLinux
-* Debian
 * Centos
+* Debian
 * Fedora
 * RedHat
 * Rocky
 * Suse
 * Ubuntu
+
+## Installation
+
+### Ansible galaxy
+
+The role is available on [Ansible Galaxy](https://galaxy.ansible.com/ui/standalone/roles/stafwag/libvirt/).
+
+To install the role from Ansible Galaxy execute the command below.
+
+```bash
+$ ansible-galaxy role install stafwag.libvirt
+```
+
+### Source Code
+
+If you want to use the source code directly.
+
+Clone the role source code.
+
+```bash
+$ git clone https://github.com/stafwag/ansible-role-libvirt stafwag.libvirt
+```
+
+and put it into the [role search path](https://docs.ansible.com/ansible/2.4/playbooks_reuse_roles.html#role-search-path)
 
 ## Role tasks, variables and templates
 
@@ -41,10 +65,11 @@ service.
 ### Install libvirt packages
  
 ```
-- name: Install libvirt 
-  gather_facts: true 
+---
+- name: Install libvirt
+  gather_facts: true
   become: true
-  hosts: kvm_hosts
+  hosts: localhost
   roles:
     - role: stafwag.libvirt
 ```
@@ -53,18 +78,20 @@ service.
 
 ```
 ---
-- name: Install libvirt 
-  gather_facts: true 
-  hosts: all
+- name: Install libvirt
+  gather_facts: true
+  hosts: localhost
   become: true
   tasks:
     - name: Install the requirements
-      include_role:
-        name: "{{ item }}"
+      ansible.builtin.include_role:
+        name: "{{ _role }}"
         tasks_from:
           install
       with_items:
         - stafwag.libvirt
+      loop_control:
+        loop_var: _role
 ```
 
 ## License

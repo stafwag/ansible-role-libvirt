@@ -1,0 +1,7 @@
+---
+- name: Install libvirt
+  gather_facts: true
+  become: true
+  hosts: localhost
+  roles:
+    - role: stafwag.libvirt

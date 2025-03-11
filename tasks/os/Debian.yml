@@ -1,0 +1,15 @@
+---
+- name: Try to set debian_codename
+  when:
+    - ansible_lsb.codename is defined
+  block:
+    - name: Display ansible_lsb codename
+      ansible.builtin.debug:
+        msg:
+          - "codename: {{ ansible_lsb.codename }}"
+      tags:
+        - never
+        - debug
+    - name: Set debian_codename
+      ansible.builtin.set_fact:
+        ansible_os_family_code_name: "{{ ansible_lsb.codename }}"

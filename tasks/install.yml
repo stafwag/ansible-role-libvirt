@@ -1,20 +1,46 @@
 ---
 - name: Install OS related packages
-  ansible.builtin.include_tasks: "{{ install }}"
+  ansible.builtin.include_tasks: "{{ _os_tasks }}"
   with_first_found:
-    - install/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml
-    - install/{{ ansible_distribution }}.yml
-    - install/{{ ansible_os_family }}-{{ ansible_pkg_mgr }}.yml
-    - install/{{ ansible_os_family }}.yml
-    - install/defaults.yml
+    - "os/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "os/{{ ansible_distribution }}.yml"
+    - "os/{{ ansible_os_family }}-{{ ansible_pkg_mgr }}.yml"
+    - "os/{{ ansible_os_family }}.yml"
+    - "os/defaults.yml"
   loop_control:
-    loop_var: install
-  tags:
-    - install
-  when:
-    - ansible_distribution is defined
-    - ansible_os_family is defined
-    - ansible_distribution_major_version is defined
+    loop_var: _os_tasks
+
+- name: Set OS related variables
+  ansible.builtin.include_vars: "{{ _os_vars }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_os_family_code_name }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_pkg_mgr }}.yml"
+    - "{{ ansible_os_family }}.yml"
+    - "defaults.yml"
+  loop_control:
+    loop_var: _os_vars
+
+- name: Remove packages
+  ansible.builtin.package:
+    name: "{{ _pkg }}"
+    state: absent
+  with_items: "{{ _packages_to_remove | default([]) }}"
+  loop_control:
+    loop_var: _pkg
+  notify:
+    - Reload libvirtd
+
+- name: Install packages
+  ansible.builtin.package:
+    name: "{{ _pkg }}"
+    state: present
+  with_items: "{{ _packages_to_install | default([]) }}"
+  loop_control:
+    loop_var: _pkg
+  notify:
+    - Reload libvirtd
 
 - name: Enable libvirtd
   become: true
@@ -22,5 +48,3 @@
     name: libvirtd
     state: started
     enabled: true
-  tags:
-    - install

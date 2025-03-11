@@ -1,0 +1,6 @@
+---
+_packages_to_install:
+  - qemu-system
+  - libvirt-clients
+  - libvirt-daemon-system
+  - bridge-utils

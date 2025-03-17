@@ -30,6 +30,7 @@
           bash
       register: shell_get_debian_codename
       changed_when: false
+
     - name: Display shell_get_debian_codename
       ansible.builtin.debug:
         msg:
@@ -37,21 +38,15 @@
       tags:
         - never
         - debug
+
     - name: Set debian_codename
       ansible.builtin.set_fact:
-        debian_codename: "{{ shell_get_debian_codename.stdout_lines[0] }}"
-    - name: Display debian_codename
+        ansible_os_family_code_name: "{{ shell_get_debian_codename.stdout_lines[0] }}"
+
+    - name: Display ansible_os_family_code_name
       ansible.builtin.debug:
         msg:
-          - "{{ debian_codename }}"
+          - "{{ ansible_os_family_code_name }}"
       tags:
         - never
         - debug
-
-- name: Install the required Debian packages
-  ansible.builtin.include_tasks: "{{ install_debian }}"
-  with_first_found:
-    - Debian_os_family/{{ debian_codename }}.yml
-    - Debian_os_family/defaults.yml
-  loop_control:
-    loop_var: install_debian

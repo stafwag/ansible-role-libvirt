@@ -1,0 +1,5 @@
+---
+_packages_to_install:
+  - libvirt
+  - qemu-kvm
+  - patterns-openSUSE-kvm_server

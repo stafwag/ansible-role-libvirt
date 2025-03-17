@@ -22,6 +22,13 @@
   loop_control:
     loop_var: _os_vars
 
+- name: Not supported
+  ansible.builtin.debug:
+    msg:
+      - Your GNU/Linux distribution or version isn't supported (yet).
+  when:
+    - _packages_to_install is undefined
+
 - name: Remove packages
   ansible.builtin.package:
     name: "{{ _pkg }}"

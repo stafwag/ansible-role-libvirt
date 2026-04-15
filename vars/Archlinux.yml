@@ -9,6 +9,8 @@ _packages_to_install:
   - libvirt
   - qemu-full
   - dnsmasq
-  - bridge-utils
   - openbsd-netcat
   - dmidecode
+  - iptables-nft
+  - edk2-ovmf
+  - swtpm
